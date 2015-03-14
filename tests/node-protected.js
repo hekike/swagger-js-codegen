@@ -55,7 +55,7 @@ vows.describe('Test Protected').addBatch({
                     return promise;
                 },
                 'Should have good response': function (result) {
-                    assert.equal(result.response.statusCode, 200);
+                    assert.equal(result.response.status, 200);
                 }
             },
             'Calling operation with wrong token': {
@@ -73,7 +73,7 @@ vows.describe('Test Protected').addBatch({
                     return promise;
                 },
                 'Should have unauthorized response': function (err, result) {
-                    assert.equal(err.response.statusCode, 401);
+                    assert.equal(err.response.status, 401);
                     assert.strictEqual(result, undefined);
                 }
             },
@@ -92,7 +92,7 @@ vows.describe('Test Protected').addBatch({
                     return promise;
                 },
                 'Should have good response': function (result) {
-                    assert.equal(result.response.statusCode, 200);
+                    assert.equal(result.response.status, 200);
                 }
             },
             'Overriding good token with bad one on the operation call': {
@@ -110,7 +110,7 @@ vows.describe('Test Protected').addBatch({
                     return promise;
                 },
                 'Should have unauthorized response': function (err, result) {
-                    assert.equal(err.response.statusCode, 401);
+                    assert.equal(err.response.status, 401);
                     assert.strictEqual(result, undefined);
                 }
             },
@@ -127,7 +127,7 @@ vows.describe('Test Protected').addBatch({
                     return promise;
                 },
                 'Should have unauthorized response': function (result) {
-                    assert.equal(result.response.statusCode, 200);
+                    assert.equal(result.response.status, 200);
                 }
             },
             'Calling operation with bad token that overrides good token set in the constructor': {
@@ -143,7 +143,7 @@ vows.describe('Test Protected').addBatch({
                     return promise;
                 },
                 'Should have unauthorized response': function (err, result) {
-                    assert.equal(err.response.statusCode, 401);
+                    assert.equal(err.response.status, 401);
                     assert.strictEqual(result, undefined);
                 }
             },
@@ -160,7 +160,7 @@ vows.describe('Test Protected').addBatch({
                     return promise;
                 },
                 'Should have unauthorized response': function (result) {
-                    assert.equal(result.response.statusCode, 200);
+                    assert.equal(result.response.status, 200);
                 }
             },
             'Calling operation with good token that overrides empty options in the constructor': {
@@ -178,7 +178,7 @@ vows.describe('Test Protected').addBatch({
                     return promise;
                 },
                 'Should have unauthorized response': function (result) {
-                    assert.equal(result.response.statusCode, 200);
+                    assert.equal(result.response.status, 200);
                 }
             }
         }

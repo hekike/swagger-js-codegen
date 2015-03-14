@@ -1,12 +1,4 @@
-var req = {
-    method: '{{method}}',
-    uri: domain + path,
-    qs: queryParameters,
-    headers: headers,
-    body: body
-};
-
-var req = request['{{method}}''](domain + path);
+var req = request['{{method}}'](domain + path);
 
 // Type form
 if(Object.keys(form).length > 0) {
@@ -18,13 +10,22 @@ if(typeof(body) === 'object') {
     req.set('Content-Type', 'application/json');
 }
 
+if(body) {
+    req.send(body);
+}
+
+if(queryParameters) {
+    req.query(queryParameters);
+}
+
+if(headers) {
+    req.set(headers);
+}
+
 req
-.set(headers)
-.query(queryParameters)
-.send(body)
 .end(function(response){
     if (!response.error) {
-        return deferred.reject(response.error.message);
+        return deferred.reject(response.error);
     }
 
     if(response.status >= 200 && response.status <= 299) {
