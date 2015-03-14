@@ -5,27 +5,37 @@ var req = {
     headers: headers,
     body: body
 };
+
+var req = request['{{method}}''](domain + path);
+
+// Type form
 if(Object.keys(form).length > 0) {
-    req.form = form;
+    req.type('form')
 }
+
+// Type json
 if(typeof(body) === 'object') {
-    req.json = true;
+    req.set('Content-Type', 'application/json');
 }
-request(req, function(error, response, body){
-    if(error) {
-        deferred.reject(error);
+
+req
+.set(headers)
+.query(queryParameters)
+.send(body)
+.end(function(response){
+    if (!response.error) {
+        return deferred.reject(response.error.message);
+    }
+
+    if(response.status >= 200 && response.status <= 299) {
+       deferred.resolve({
+         response: response,
+         body: response.body
+        });
     } else {
-        if(/^application\/(.*\\+)?json/.test(response.headers['content-type'])) {
-            try {
-                body = JSON.parse(body);
-            } catch(e) {
-            
-            }
-        }
-        if(response.statusCode >= 200 && response.statusCode <= 299) {
-           deferred.resolve({ response: response, body: body });
-        } else {
-           deferred.reject({ response: response, body: body });
-        }
+       deferred.reject({
+         response: response,
+         body: response.body
+        });
     }
 });
